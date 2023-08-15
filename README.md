@@ -22,3 +22,6 @@ npm run dev
 >npx tailwindcss init -p
 
 // настроил tailwind.config.js
+
+2) Установка Vue Router, плюс 2 проверочных компонента
+npm install vue-router@4
