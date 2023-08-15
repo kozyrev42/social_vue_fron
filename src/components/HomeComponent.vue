@@ -6,10 +6,30 @@
 </template>
 
 <script>
+import api from '../api'
+
 export default {
   name: 'HomeComponent',
   props: {
     msg: String
+  },
+
+  mounted() {
+    this.testApi();
+  },
+
+  methods: {
+    testApi() {
+      api.get('/api/test')
+        .then(response => {
+          console.log(response)
+        })
+
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
   }
 }
 </script>

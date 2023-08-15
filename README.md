@@ -25,3 +25,7 @@ npm run dev
 
 2) Установка Vue Router, плюс 2 проверочных компонента
 npm install vue-router@4
+
+3) Подключил axios в файле: "src/api.js"
+>npm install axios
++ отправил тестовый запрос к api
