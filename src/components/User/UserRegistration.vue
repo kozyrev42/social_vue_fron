@@ -1,15 +1,12 @@
 <template>
-  <div>
-    UserRegistration
-
-    <router-link to="/" class="btn btn-outline-success mb-2">Home</router-link><br>
-
-    <div class="w-25">
-      <input v-model="name" type="text"  class="form-control mt-3 mb-3" placeholder="name">
-      <input v-model="email" type="email"  class="form-control mt-3 mb-3" placeholder="email">
-      <input v-model="password" type="password"  class="form-control mt-3 mb-3" placeholder="password">
-      <input v-model="password_confirmation" type="password"  class="form-control mt-3 mb-3" placeholder="confirm password">
-      <input @click.prevent="userRegistration" type="submit" class="btn btn-primary">
+  <div class="w-96 mx-auto">
+    <div class="">
+      <input v-model="name" type="text"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="name">
+      <input v-model="email" type="email"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="email">
+      <input v-model="password" type="password"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="password">
+      <input v-model="password_confirmation" type="password"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="confirm password">
+      <div v-if="error" class="" role="alert">{{ error }}</div>
+      <input @click.prevent="userRegistration" type="submit" class="block float-right mx-auto w-32 p-1 bg-sky-400 text-white rounded-lg">
     </div>
   </div>
 </template>
@@ -25,7 +22,9 @@ export default {
       name: null,
       email: null,
       password: null,
-      password_confirmation: null
+      password_confirmation: null,
+
+      error: null
     }
   },
 
@@ -42,13 +41,19 @@ export default {
           console.log(response)
           // помещаем токен в localStorage
           localStorage.setItem('social_access_token', response.data.access_token)
+
+          // Вызываем событие успешной авторизации
+          this.$emit('loginSuccess')
+
           // переход на страницу Home
           this.$router.push({name: 'home'})
-
         })
 
         .catch(error => {
           console.log(error)
+
+          // в this.error помещаем сообщение об ошибке
+          this.error = "формат почты неверный, или ошибка при заполнении"
         })
     }
   }

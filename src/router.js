@@ -7,8 +7,11 @@ import FruitsComponent from './components/FruitsComponent.vue';
 const routes = [
     { path: '/', component: HomeComponent, name: 'home' },
     { path: '/fruits', component: FruitsComponent, name: 'fruits' },
-    { path: '/user/login', component: () => import('@/components/User/UserLogin.vue'), name: 'user.login' },
-    { path: '/user/registration', component: () => import('@/components/User/UserRegistration.vue'), name: 'user.registration' },
+    { path: '/user/login', component: () => import('./components/User/UserLogin.vue'), name: 'user.login' },
+    { path: '/user/registration', component: () => import('./components/User/UserRegistration.vue'), name: 'user.registration' },
+
+    { path: '/user/personal', component: () => import('./components/User/UserPersonal.vue'), name: 'user.personal' },
+
 ];
 
 // создание экземпляра маршрутизатора и передача опций `routes`

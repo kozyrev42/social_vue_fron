@@ -1,25 +1,14 @@
 <template>
-  <div>
-    <div>
-      UserLogin
-    </div>
-
-    <router-link to="/" class="btn btn-outline-success mb-2">Home</router-link><br>
-
-    <router-link to="/user/registration" class="btn btn-primary">Registration</router-link><br/><br/>
+  <div class="w-96 mx-auto">
 
     <div class="w-50">
-      <input v-model="email" type="email" id="email" class="form-control mt-3 mb-3" placeholder="email">
-      <input v-model="password" type="password" id="password" class="form-control mt-3 mb-3" placeholder="password">
+      <input v-model="email" type="email" id="email" class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="email">
+      <input v-model="password" type="password" id="password" class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="password">
 
+      <div v-if="error" class="" role="alert">{{ error }}</div>
 
-      <div v-if="error" class="alert alert-danger" role="alert">
-        {{ error }}
-      </div>
-
-      <input @click.prevent="login" type="submit" class="btn btn-primary">
+      <input @click.prevent="login" type="submit" class="block float-right mx-auto w-32 p-1 bg-sky-400 text-white rounded-lg">
     </div>
-
   </div>
 </template>
 
@@ -47,6 +36,9 @@ export default {
         .then(response => {
           // помещаем токен в localStorage
           localStorage.setItem('social_access_token', response.data.access_token)
+
+          // Вызываем событие успешной авторизации
+          this.$emit('loginSuccess');
 
           // переход на страницу Home
           this.$router.push({name: 'home'})
