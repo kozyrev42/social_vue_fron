@@ -1,7 +1,7 @@
 <template>
     <div class="w-96 mx-auto ">
         
-        <div>
+        <div class="mb-4">
             <div>
                 <input v-model="title" class="w-96 mb-3 rounded-3xl border p-3 border-slate-300" type="text"
                        placeholder="заголовок">
@@ -44,7 +44,16 @@
                 </a>
             </div>
         </div>
-    
+        
+        <div v-if="posts">
+            <h1 class="mb-8 pb-8 border-b border-gray-400">Мои публикации:</h1>
+            <div v-for="post in posts" class="mb-8 pb-8 border-b border-gray-400">
+                <p class="text-right text-slate-500 text-sm">{{ post.date }}</p>
+                <h1 class="text-xl">{{ post.title }}</h1>
+                <img v-if="post.image_url" :src="post.image_url" :alt="post.title" class="my-3 mx-auto rounded-2xl">
+                <p>{{ post.content}}</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -58,11 +67,23 @@ export default {
         return {
             title: '',
             content: '',
-            image: null
+            image: null,
+            posts:[]
         }
     },
     
+    mounted() {
+        this.getPosts()
+    },
+    
     methods: {
+        getPosts() {
+            api.get('/api/posts')
+                .then(response => {
+                    this.posts = response.data.data
+                })
+        },
+        
         createPost() {
             const image_id = this.image ? this.image.id : null
             api.post('/api/post/create', {title: this.title, content: this.content, image_id: image_id})
@@ -70,7 +91,8 @@ export default {
                     this.title = ''
                     this.content = ''
                     this.image = null
-                    console.log(response)
+                    // добавляем новосозданный пост в начало массива posts. Новый пост будет отображаться вверху списка
+                    this.posts.unshift(response.data.data)
                 })
         },
         
