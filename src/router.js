@@ -12,6 +12,7 @@ const routes = [
 
     { path: '/user/personal', component: () => import('./components/User/UserPersonal.vue'), name: 'user.personal' },
     { path: '/user/index', component: () => import('./components/User/UserIndex.vue'), name: 'user.index' },
+    { path: '/user/:id', component: () => import('./components/User/UserShow.vue'), name: 'user.show' },
 ];
 
 // создание экземпляра маршрутизатора и передача опций `routes`

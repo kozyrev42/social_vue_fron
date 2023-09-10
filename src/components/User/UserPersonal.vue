@@ -47,18 +47,14 @@
         
         <div v-if="posts">
             <h1 class="mb-8 pb-8 border-b border-gray-400">Мои публикации:</h1>
-            <div v-for="post in posts" class="mb-8 pb-8 border-b border-gray-400">
-                <p class="text-right text-slate-500 text-sm">{{ post.date }}</p>
-                <h1 class="text-xl">{{ post.title }}</h1>
-                <img v-if="post.image_url" :src="post.image_url" :alt="post.title" class="my-3 mx-auto rounded-2xl">
-                <p>{{ post.content}}</p>
-            </div>
+            <Post v-for="post in posts" :post="post"></Post>
         </div>
     </div>
 </template>
 
 <script>
 import api from "../../api.js";
+import Post from "../Post/Post.vue";
 
 export default {
     name: "UserPersonal",
@@ -72,13 +68,17 @@ export default {
         }
     },
     
+    components: {
+        Post
+    },
+    
     mounted() {
-        this.getPosts()
+        this.getPostsAuth()
     },
     
     methods: {
-        getPosts() {
-            api.get('/api/posts')
+        getPostsAuth() {
+            api.get('/api/posts/auth')
                 .then(response => {
                     this.posts = response.data.data
                 })
