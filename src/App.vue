@@ -5,7 +5,8 @@
       <router-link v-if="!accessToken" to="/user/login" class="">Login</router-link>
       <router-link v-if="!accessToken" to="/user/registration" class="">Registration</router-link>
       <router-link v-if="accessToken" to="/user/index" class="">Пользователи</router-link>
-      <router-link v-if="accessToken" to="/user/personal" class="">Personal</router-link>
+      <router-link v-if="accessToken" to="/user/feed" class="">Лента</router-link>
+      <router-link v-if="accessToken" to="/user/personal" class="">Домашняя</router-link>
       <button v-if="accessToken" @click.prevent="logout" class="">Выход</button>
     </div>
   </div>
