@@ -19,6 +19,7 @@ export default {
     data() {
         return {
             posts:[],
+            // в userId - прилетит id из урла-браузера, потому-что в роутинге мы прописали :id '/user/:id/show'
             userId: this.$route.params.id
         }
     },
