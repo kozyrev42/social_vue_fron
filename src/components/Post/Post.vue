@@ -57,6 +57,37 @@
                 Репост
             </a>
         </div>
+    
+        <!-- показ списка комментариев -->
+        <div v-if="post.comments_count > 0" class="mt-4">
+            
+            <p v-if="!isShowedComments" @click="getComments(post)">Показать комментарии: {{ post.comments_count }}</p>
+            <p v-if="isShowedComments" @click="isShowedComments = false">Скрыть комментарии</p>
+            <div v-if="comments && isShowedComments">
+                <div v-for="comment in comments" class="mt-4 pt-4 border-t border-gray-300">
+                    <p class="text-sm">{{ comment.user.name }}</p>
+                    <p>{{ comment.body }}</p>
+                    <p class="text-right text-sm">{{ comment.date }}</p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- форма комментария -->
+        <div class="mb-4 mt-4">
+            <div>
+                <input v-model="body" class="w-96 mb-3 rounded-3xl border p-3 border-slate-300" type="text"
+                       placeholder="ваш комментарий">
+                <div>
+                    <a @click.prevent="createComment(post)" href="#" class="block p-1 w-48 text-center rounded-2xl bg-green-400 text-white
+                        hover:bg-white hover:border hover:border-green-400 hover:text-green-400 box-border ml-auto">
+                        добавить комментарий
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -75,7 +106,10 @@ export default {
             title:"",
             content:"",
             is_repost: false,
-            repostedId: null
+            repostedId: null,
+            body:"",
+            comments: [],
+            isShowedComments: false
         }
     },
     
@@ -101,6 +135,26 @@ export default {
                 .then(response => {
                     this.title = ''
                     this.content = ''
+                })
+        },
+    
+        createComment(post){
+            api.post(`/api/posts/${post.id}/create_comment`, {body: this.body})
+                .then(response => {
+                    this.body = ''
+                    this.comments.push(response.data.data)
+                    post.comments_count++
+                    this.isShowedComments = true
+                })
+        },
+    
+        getComments(post){
+            api.get(`/api/posts/${post.id}/get_comments`)
+                .then(response => {
+                    this.comments = response.data.data
+                    
+                    // скроем кнопку "Показать комментарии:"
+                    this.isShowedComments = true
                 })
         }
     }
