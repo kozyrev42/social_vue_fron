@@ -2,13 +2,22 @@
     <div class="w-96 mx-auto ">
         
         <div class="mb-4">
-            <div>
-                <input v-model="title" class="w-96 mb-3 rounded-3xl border p-3 border-slate-300" type="text"
+            <div class="mb-3">
+                <input v-model="title" class="w-96 rounded-3xl border p-3 border-slate-300" type="text"
                        placeholder="заголовок">
+                <!-- обработка ошибок -->
+                <div v-if="errors.title">
+                    <p v-for="error in errors.title" class="text-red-600">Поле "заголовок" не заполнено</p>
+                </div>
+                
             </div>
-            <div>
-                <textarea v-model="content" class="w-96 mb-3 rounded-3xl border p-3 border-slate-300"
+            <div class="mb-3">
+                <textarea v-model="content" class="w-96 rounded-3xl border p-3 border-slate-300"
                           placeholder="контент"></textarea>
+                <!-- обработка ошибок -->
+                <div v-if="errors.content">
+                    <p v-for="error in errors.content" class="text-red-600">Поле "контент" не заполнено</p>
+                </div>
             </div>
             
             <div class="flex mb-3 items-center">
@@ -26,7 +35,8 @@
                 
                 <div>
                     <!-- .prevent - чтобы ссылка "#" не дёргалась -->
-                    <a @click.prevent="image = null" href="#" class="ml-3">
+                    <!-- отрисовка кнопки "отмена", только если изображение предзагружено -->
+                    <a v-if="image" @click.prevent="image = null" href="#" class="ml-3">
                         Отмена
                     </a>
                 </div>
@@ -64,7 +74,8 @@ export default {
             title: '',
             content: '',
             image: null,
-            posts:[]
+            posts:[],
+            errors: []
         }
     },
     
@@ -94,6 +105,11 @@ export default {
                     // добавляем новосозданный пост в начало массива posts. Новый пост будет отображаться вверху списка
                     this.posts.unshift(response.data.data)
                 })
+                .catch( e => {
+                        // ошибки помещаем в подготовленный массив errors
+                        this.errors = e.response.data.errors
+                    }
+                )
         },
         
         // цель этого метода - это обеспечить пользователю возможность выбора файла,
