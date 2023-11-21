@@ -1,12 +1,19 @@
 <template>
     <div class="mb-8 pb-8 border-b border-gray-400">
-        
+        <div class="text-gray-500">
+            Автор поста:
+            <router-link :to="{name: 'user.show', params: {id: post.user.id}}">{{post.user.name}}</router-link>
+        </div>
         <h1 class="text-xl">{{ post.title }}</h1>
         <img v-if="post.image_url" :src="post.image_url" :alt="post.title" class="my-3 mx-auto rounded-2xl">
         <p>{{ post.content}}</p>
 
         <!-- отображения оригинального поста у репоста, если тот имеется -->
         <div v-if="post.reposted_post" class="bg-gray-200 p-5 my-5 border border-gray-300">
+            <div class="text-gray-500">
+                Автор поста:
+                <router-link :to="{name: 'user.show', params: {id: post.reposted_post.user.id}}">{{post.reposted_post.user.name}}</router-link>
+            </div>
             <h1 class="text-xl">{{ post.reposted_post.title }}</h1>
             <img v-if="post.reposted_post.image_url" :src="post.reposted_post.image_url" :alt="post.reposted_post.title" class="my-3 mx-auto rounded-2xl">
             <p>{{ post.reposted_post.content}}</p>
@@ -61,8 +68,8 @@
         <!-- показ списка комментариев -->
         <div v-if="post.comments_count > 0" class="mt-4">
             
-            <p v-if="!isShowedComments" @click="getComments(post)">Показать комментарии: {{ post.comments_count }}</p>
-            <p v-if="isShowedComments" @click="isShowedComments = false">Скрыть комментарии</p>
+            <p class="cursor-pointer text-green-600" v-if="!isShowedComments" @click="getComments(post)">Показать комментарии: {{ post.comments_count }}</p>
+            <p class="cursor-pointer text-green-600" v-if="isShowedComments" @click="isShowedComments = false">Скрыть комментарии</p>
             <div v-if="comments && isShowedComments">
                 <div v-for="comment in comments" class="mt-4 pt-4 border-t border-gray-300">
                     <p class="text-sm">{{ comment.user.name }}</p>
