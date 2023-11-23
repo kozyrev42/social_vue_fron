@@ -1,6 +1,7 @@
 <template>
+    <!-- страница "домашняя" -->
     <div class="w-96 mx-auto ">
-        
+        <Statistics :statsData="stats"></Statistics>
         <div class="mb-4">
             <div class="mb-3">
                 <input v-model="title" class="w-96 rounded-3xl border p-3 border-slate-300" type="text"
@@ -65,6 +66,7 @@
 <script>
 import api from "../../api.js";
 import Post from "../Post/Post.vue";
+import Statistics from "../Statistics/Statistics.vue";
 
 export default {
     name: "UserPersonal",
@@ -75,19 +77,31 @@ export default {
             content: '',
             image: null,
             posts:[],
-            errors: []
+            errors: [],
+            stats: []
         }
     },
     
     components: {
-        Post
+        Post,
+        // подключаем компонент "статистика"
+        Statistics
     },
     
     mounted() {
         this.getPostsAuth()
+        this.getStatistics()
     },
     
     methods: {
+        
+        getStatistics() {
+            api.post('/api/users/stats', {id: null})
+                .then(response => {
+                    this.stats = response.data.data
+                })
+        },
+        
         getPostsAuth() {
             api.get('/api/posts/auth')
                 .then(response => {
