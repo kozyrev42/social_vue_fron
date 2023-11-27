@@ -47,6 +47,11 @@ router.beforeEach((to, from, next) => {
         next({ name: 'home' });
     }
 
+    // если роут "/" -> "home" и есть токен, то перенаправляем на страницу "домашняя"
+    if (to.name === 'home' && accessToken) {
+        next({ name: 'user.personal' });
+    }
+
     next();
 });
 

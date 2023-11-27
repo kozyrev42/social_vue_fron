@@ -1,13 +1,11 @@
 <template>
   <div class="w-96 mx-auto">
-    <div class="">
-      <input v-model="name" type="text"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="name">
-      <input v-model="email" type="email"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="email">
-      <input v-model="password" type="password"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="password">
-      <input v-model="password_confirmation" type="password"  class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="confirm password">
+      <input v-model="name" type="text"  class="w-80 p-1 mb-2 border border-inherit rounded-lg" placeholder="name">
+      <input v-model="email" type="email"  class="w-80 p-1 mb-2 border border-inherit rounded-lg" placeholder="email">
+      <input v-model="password" type="password"  class="w-80 p-1 mb-2 border border-inherit rounded-lg" placeholder="password">
+      <input v-model="password_confirmation" type="password"  class="w-80 p-1 mb-2 border border-inherit rounded-lg" placeholder="confirm password">
       <div v-if="error" class="" role="alert">{{ error }}</div>
       <input @click.prevent="userRegistration" type="submit" class="block float-right mx-auto w-32 p-1 bg-sky-400 text-white rounded-lg">
-    </div>
   </div>
 </template>
 

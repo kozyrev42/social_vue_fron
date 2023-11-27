@@ -2,8 +2,8 @@
   <div class="w-96 mx-auto">
 
     <div class="w-50">
-      <input v-model="email" type="email" id="email" class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="email">
-      <input v-model="password" type="password" id="password" class="w-96 p-1 mb-2 border border-inherit rounded-lg" placeholder="password">
+      <input v-model="email" type="email" id="email" class="w-80 p-1 mb-2 border border-inherit rounded-lg" placeholder="email">
+      <input v-model="password" type="password" id="password" class="w-80 p-1 mb-2 border border-inherit rounded-lg" placeholder="password">
 
       <div v-if="error" class="" role="alert">{{ error }}</div>
 

@@ -4,7 +4,7 @@
         <div v-for="user in users" class="flex justify-between mb-6 pb-6 border-b border-gray-400">
             <router-link :to="{name: 'user.show', params: {id: user.id}}">
                 <p>{{user.name}}</p>
-                <p>{{user.email}}</p>
+                <!--<p>{{user.email}}</p>-->
             </router-link>
             
             <div>

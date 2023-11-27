@@ -1,6 +1,4 @@
 <template>
-
-  <div>
     <div class="flex justify-between p-8 w-96 mx-auto">
       <router-link v-if="!accessToken" to="/user/login" class="">Login</router-link>
       <router-link v-if="!accessToken" to="/user/registration" class="">Registration</router-link>
@@ -9,7 +7,6 @@
       <router-link v-if="accessToken" to="/user/personal" class="">Домашняя</router-link>
       <button v-if="accessToken" @click.prevent="logout" class="">Выход</button>
     </div>
-  </div>
 
   <router-view @loginSuccess="updateAccessToken"></router-view>
 </template>
@@ -113,5 +110,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .mx-auto {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 </style>
